@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'photo',
+    path: '',
     loadChildren: () =>
       import('./photo/photo.module').then((m) => m.PhotoPageModule),
   },
