@@ -26,8 +26,9 @@
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button (click)="addPhotoToGallery()" (change)="upload($event)">
+    <ion-fab-button (click)="addPhotoToGallery()" class="hidden">
       <ion-icon name="camera"></ion-icon>
+      <input type="file" (change)="upload($event)" accept="image/*" />
     </ion-fab-button>
   </ion-fab>
 </ion-content>

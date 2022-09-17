@@ -15,6 +15,7 @@ import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Storage } from '@capacitor/storage';
 import { Platform } from '@ionic/angular';
+import { getStorage, ref, uploadString } from 'firebase/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -65,7 +66,6 @@ export class PhotoService {
     });
 
     const savedImageFile = await this.savePicture(capturedPhoto);
-
     // Add new photo to Photos array
     this.photos.unshift(savedImageFile);
 
@@ -78,9 +78,10 @@ export class PhotoService {
 
   // Save picture to file on device
   private async savePicture(cameraPhoto: Photo) {
+    const storage = getStorage();
+    const storageRef = ref(storage, 'images');
     // Convert photo to base64 format, required by Filesystem API to save
     const base64Data = await this.readAsBase64(cameraPhoto);
-
     // Write the file to the data directory
     const fileName = new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -88,9 +89,6 @@ export class PhotoService {
       data: base64Data,
       directory: Directory.Data,
     });
-
-    const ref = this.storage.ref(fileName);
-    const task = ref.put(savedFile);
 
     if (this.platform.is('hybrid')) {
       // Display the new image by rewriting the 'file://' path to HTTP
@@ -117,7 +115,6 @@ export class PhotoService {
       const file = await Filesystem.readFile({
         path: cameraPhoto.path,
       });
-
       return file.data;
     } else {
       // Fetch the photo, read as a blob, then convert to base64 format

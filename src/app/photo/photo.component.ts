@@ -14,15 +14,17 @@ export class PhotoComponent {
   constructor(
     public photoService: PhotoService,
     public actionSheetController: ActionSheetController,
-    private _storage: AngularFireStorage
+    private storage: AngularFireStorage
   ) {}
 
   async ngOnInit() {
     await this.photoService.loadSaved();
   }
+
   addPhotoToGallery() {
     this.photoService.addNewToGallery();
   }
+
   upload(event) {
     // Get input file
     const file = event.target.files[0];
@@ -32,14 +34,12 @@ export class PhotoComponent {
     console.log(randomId);
     const filepath = `images/${randomId}`;
 
-    const fileRef = this._storage.ref(filepath);
+    this.storage.ref(filepath);
 
     // Upload image
-    const task = this._storage.upload(filepath, file);
-
-    // Get notified when the download URL is available
-    task.snapshotChanges().subscribe();
+    this.storage.upload(filepath, file);
   }
+
   public async showActionSheet(photo: UserPhoto, position: number) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Photos',
