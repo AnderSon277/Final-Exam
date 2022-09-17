@@ -17,6 +17,9 @@ export class PhotoComponent {
   async ngOnInit() {
     await this.photoService.loadSaved();
   }
+  addPhotoToGallery() {
+    this.photoService.addNewToGallery();
+  }
 
   public async showActionSheet(photo: UserPhoto, position: number) {
     const actionSheet = await this.actionSheetController.create({

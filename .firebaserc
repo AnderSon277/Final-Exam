@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "finalexam-aae1e": {
+      "hosting": {
+        "app": [
+          "finalexam-aae1e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "finalexam-aae1e"
+  }
+}
