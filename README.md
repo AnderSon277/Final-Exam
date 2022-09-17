@@ -2,7 +2,7 @@
 
 Aplicativo de galería que permite tomar fotos y almacenarlo en Firebase implemntado con Ionic//Angular
 
-funcionamiento -->
+funcionamiento --> https://youtu.be/d297KpOwFMc
 <br />
 
 ![photo](./src/assets/photo1.png)
