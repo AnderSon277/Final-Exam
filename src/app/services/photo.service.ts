@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Injectable } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import {
   Camera,
   CameraResultType,
@@ -22,7 +23,10 @@ export class PhotoService {
   public photos: UserPhoto[] = [];
   private PHOTO_STORAGE: string = 'photos';
 
-  constructor(private platform: Platform) {}
+  constructor(
+    private platform: Platform,
+    private storage: AngularFireStorage
+  ) {}
 
   public async loadSaved() {
     // Retrieve cached photo array data
@@ -84,6 +88,9 @@ export class PhotoService {
       data: base64Data,
       directory: Directory.Data,
     });
+
+    const ref = this.storage.ref(fileName);
+    const task = ref.put(savedFile);
 
     if (this.platform.is('hybrid')) {
       // Display the new image by rewriting the 'file://' path to HTTP
